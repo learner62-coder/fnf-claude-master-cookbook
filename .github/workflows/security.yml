@@ -11,6 +11,17 @@ jobs:
   security:
     runs-on: ubuntu-latest
     steps:
+      # CLAUDE_API_KEY now comes from Bitwarden Secrets Manager (project
+      # "FNF Infrastructure"), read by machine account
+      # github-actions-security-review. Rotating the key = update it once in
+      # Bitwarden; no per-repo secret changes needed.
+      - name: Fetch Claude API key from Bitwarden
+        uses: bitwarden/sm-action@1238aae8fc64b212641190a9227c8a734ab1a793 # v3.0.1
+        with:
+          access_token: ${{ secrets.BWS_ACCESS_TOKEN }}
+          secrets: |
+            27c86460-d380-460f-a2f6-b4d1015893b3 > CLAUDE_API_KEY
+
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
@@ -19,4 +30,4 @@ jobs:
       - uses: anthropics/claude-code-security-review@0c6a49f1fa56a1d472575da86a94dbc1edb78eda
         with:
           comment-pr: true
-          claude-api-key: ${{ secrets.CLAUDE_API_KEY }}
+          claude-api-key: ${{ env.CLAUDE_API_KEY }}
