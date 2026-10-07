@@ -10,6 +10,7 @@ on:
 jobs:
   security:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       # CLAUDE_API_KEY now comes from Bitwarden Secrets Manager (project
       # "FNF Infrastructure"), read by machine account
