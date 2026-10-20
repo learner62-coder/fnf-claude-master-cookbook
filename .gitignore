@@ -1,0 +1,21 @@
+# Secrets and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+client_secret*.json
+*credentials*.json
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+.claude/
+
+# Logs
+*.log
+
+# chat-tagging skill registry (session IDs / summaries)
+chat-tags.json
